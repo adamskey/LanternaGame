@@ -2,12 +2,14 @@
 
 TODO:
 Create classes;
-Player,
-Monster,
-Score,
-Obsticle,
-Controller (extends Player)
-Position (extends Player, Monster och Obsticle)
+*Player,
+*Monster,
+*Score,
+*Obsticle,
+*Controller (extends Player)
+*Position (extends Player, Monster och Obsticle)
+
+Create ENUM som innehåller spelsymboler
 
 * Player ska innehålla X, Y koordinater, spelsymbol, hälsa
 * Monster ska innehålla X,Y koordinater, spelsymbol, hälsa
