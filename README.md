@@ -13,6 +13,9 @@
 * Symbols
 Ska innehålla spelsymboler
 
+
+
+------------------------------------------------------------------
 * Player ska innehålla X, Y koordinater, spelsymbol, hälsa
 * Monster ska innehålla X,Y koordinater, spelsymbol, hälsa
 * Score ska innehålla poäng (en int), highscore.
