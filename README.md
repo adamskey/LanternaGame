@@ -1,6 +1,7 @@
 # LanternaGame
-Create: 
-- Classes;
+------Create------:
+
+--Classes--
 * Player,
 * Monster,
 * Score,
@@ -8,7 +9,9 @@ Create:
 * Controller (extends Player)
 * Position (extends Player, Monster och Obsticle)
 
-- ENUM som innehåller spelsymboler
+--ENUM--
+* Symbols
+Ska innehålla spelsymboler
 
 * Player ska innehålla X, Y koordinater, spelsymbol, hälsa
 * Monster ska innehålla X,Y koordinater, spelsymbol, hälsa
