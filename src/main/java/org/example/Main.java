@@ -8,6 +8,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
 
@@ -27,9 +28,11 @@ public class Main {
 
         Player player = createPlayer();
 
+        Score score = addNewFood();
+
         List<Monster> monsters = createMonsters();
 
-        drawCharacters(terminal, player, monsters);
+        drawCharacters(terminal, player, monsters, score);
 
         do {
             KeyStroke keyStroke = getUserKeyStroke(terminal);
@@ -38,7 +41,7 @@ public class Main {
 
             moveMonsters(player, monsters);
 
-            drawCharacters(terminal, player, monsters);
+            drawCharacters(terminal, player, monsters, score);
 
         } while (isPlayerAlive(player, monsters));
 
@@ -74,15 +77,19 @@ public class Main {
     }
 
     public static Player createPlayer() {
-        return new Player(10,10, 'P',3);
+        return new Player(10,10, '\u2600',3);
+    }
+
+    public static Score addNewFood() {
+        Random scorePosition = new Random();
+        return new Score(scorePosition.nextInt(25), scorePosition.nextInt(15));
     }
 
     private static List<Monster> createMonsters() {
         List<Monster> monsters = new ArrayList<>();
-        monsters.add(new Monster(3, 3, 'X'));
-        monsters.add(new Monster(23, 23, 'X'));
-        monsters.add(new Monster(23, 3, 'C'));
-        monsters.add(new Monster(3, 23, 'X'));
+        monsters.add(new Monster(3, 3, '\u26CF'));
+        monsters.add(new Monster(23, 23, '\u26CF'));
+        monsters.add(new Monster(3, 23, '\u26CF'));
         return monsters;
     }
 
@@ -93,7 +100,8 @@ public class Main {
         return terminal;
     }
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
+    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters, Score score) throws IOException {
+        //Monster
         for (Monster monster : monsters) {
             terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
             terminal.putCharacter(' ');
@@ -101,7 +109,14 @@ public class Main {
             terminal.setCursorPosition(monster.getX(), monster.getY());
             terminal.putCharacter(monster.getSymbol());
         }
+        //Creates new score
+        Random randomScorePosition = new Random();
+        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
+        terminal.putCharacter('S');
 
+        //Player
         terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
         terminal.putCharacter(' ');
 
@@ -120,4 +135,6 @@ public class Main {
         }
         return true;
     }
+
+
 }
