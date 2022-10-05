@@ -25,6 +25,7 @@ public class Main {
         TerminalSize ts = new TerminalSize(30, 20);
         terminalFactory.setInitialTerminalSize(ts);
         Terminal terminal = terminalFactory.createTerminal();
+
         List<Position> positionList = new ArrayList<>();
         List<Life> life = new ArrayList<>();
         life.add(new Life(1, 1));

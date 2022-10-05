@@ -6,11 +6,11 @@ public class Player {
     private int y;
     private int previousX;
     private int previousY;
-    private Symbols symbol;
+    private char symbol;
     private int healthPoints;
 
 
-    public Player(int x, int y, Symbols symbol, int healthPoints) {
+    public Player(int x, int y, char symbol, int healthPoints) {
         this.x = x;
         this.y = y;
         this.previousX = x;
@@ -35,22 +35,6 @@ public class Player {
         this.y = y;
     }
 
-    public Symbols getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(Symbols symbol) {
-        this.symbol = symbol;
-    }
-
-    public int getHealthPoints() {
-        return healthPoints;
-    }
-
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
-    }
-
     public int getPreviousX() {
         return previousX;
     }
@@ -66,6 +50,23 @@ public class Player {
     public void setPreviousY(int previousY) {
         this.previousY = previousY;
     }
+
+    public char getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
     public void moveUp(){
         previousX = x;
         previousY = y;

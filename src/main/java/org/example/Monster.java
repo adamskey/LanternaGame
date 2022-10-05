@@ -5,16 +5,14 @@ public class Monster {
     private int y;
     private int previousX;
     private int previousY;
-    private Symbols symbol;
-    private int healthPoints;
+    private char symbol;
 
-    public Monster(int x, int y, Symbols symbol, int healthPoints) {
+    public Monster(int x, int y, char symbol) {
         this.x = x;
         this.y = y;
         this.previousX = x;
         this.previousY = y;
         this.symbol = symbol;
-        this.healthPoints = healthPoints;
     }
 
     public int getX() {
@@ -49,22 +47,15 @@ public class Monster {
         this.previousY = previousY;
     }
 
-    public Symbols getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(Symbols symbol) {
+    public void setSymbol(char symbol) {
         this.symbol = symbol;
     }
 
-    public int getHealthPoints() {
-        return healthPoints;
-    }
-
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
-    }
-    public void moveTowardsPlayer(Player player){
+    public void moveTowards(Player player){
         previousX = x;
         previousY = y;
 
