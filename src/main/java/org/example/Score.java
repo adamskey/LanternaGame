@@ -9,6 +9,9 @@ public class Score {
     private char symbol;
 
 
+    public Score() {
+    }
+
     public Score(int scoreX, int scoreY, int oldScoreX, int getOldScoreY, char symbol) {
         this.scoreX = scoreX;
         this.scoreY = scoreY;
@@ -62,7 +65,7 @@ public class Score {
         this.symbol = symbol;
     }
 
-    private void addNewFood () {
+    private void addNewScore () {
 
     }
 }

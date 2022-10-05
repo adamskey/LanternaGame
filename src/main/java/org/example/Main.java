@@ -28,7 +28,9 @@ public class Main {
 
         Player player = createPlayer();
 
-        Score score = addNewFood();
+        Score score = new Score();
+
+        createFirstScore(score, terminal);
 
         List<Monster> monsters = createMonsters();
 
@@ -40,6 +42,8 @@ public class Main {
             movePlayer(player, keyStroke);
 
             moveMonsters(player, monsters);
+
+            addNewScore(player,score, terminal);
 
             drawCharacters(terminal, player, monsters, score);
 
@@ -80,9 +84,27 @@ public class Main {
         return new Player(10,10, '\u2600',3);
     }
 
-    public static Score addNewFood() {
-        Random scorePosition = new Random();
-        return new Score(scorePosition.nextInt(25), scorePosition.nextInt(15));
+    public static Score addNewScore(Player player, Score score, Terminal terminal) throws IOException {
+        if(player.getX() == score.getScoreX() && player.getY() == score.getScoreY()){
+            Random randomScorePosition = new Random();
+        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
+        terminal.putCharacter('S');
+        terminal.bell();
+        terminal.flush();
+          //  createFirstScore(score, terminal);
+        }
+        return null;
+    }
+    public static void createFirstScore(Score score, Terminal terminal) throws IOException {
+        Random randomScorePosition = new Random();
+        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
+        terminal.putCharacter('S');
+        terminal.bell();
+        terminal.flush();
     }
 
     private static List<Monster> createMonsters() {
@@ -110,11 +132,11 @@ public class Main {
             terminal.putCharacter(monster.getSymbol());
         }
         //Creates new score
-        Random randomScorePosition = new Random();
-        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
-        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
-        terminal.putCharacter('S');
+//        Random randomScorePosition = new Random();
+//        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+//        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+//        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
+//        terminal.putCharacter('S');
 
         //Player
         terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
@@ -124,6 +146,7 @@ public class Main {
         terminal.putCharacter(player.getSymbol());
 
         terminal.flush();
+
 
     }
 
