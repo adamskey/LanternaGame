@@ -111,7 +111,7 @@ public class Main {
         //Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
         terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
         terminal.setCursorPosition(score.getScoreX(), score.getScoreY());
-        terminal.putCharacter('S');
+        terminal.putCharacter('*');
         terminal.bell();
         terminal.flush();
     }
@@ -177,7 +177,7 @@ public class Main {
 
             }
             if (monster.getX() == player.getX() && monster.getY() == player.getY() && hearts.isEmpty()) {
-                String message = " -GAME OVER-";
+                String message = " -Ingen tewofaced shit mannen-";
                 for (int i = 0; i < message.length(); i++) {
                     terminal.setCursorPosition(i, 10);
                     terminal.setForegroundColor(TextColor.ANSI.RED);

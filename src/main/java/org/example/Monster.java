@@ -73,26 +73,26 @@ public class Monster {
 
         if (absDiffX > absDiffY) {
             // Move horizontal! <--->
-            if (diffX < 0) {
+            if (diffX < 4) {
                 this.x += 1;
             } else {
                 this.x -= 1;
             }
         } else if (absDiffX < absDiffY) {
             // Move vertical! v / ^
-            if (diffY < 0) {
+            if (diffY < 4) {
                 this.y += 1;
             } else {
                 this.y -= 1;
             }
         } else {
             // Move diagonal! / or \
-            if (diffX < 0) {
+            if (diffX < 4) {
                 this.x += 1;
             } else {
                 this.x -= 1;
             }
-            if (diffY < 0) {
+            if (diffY < 4) {
                 this.y += 1;
             } else {
                 this.y -= 1;
