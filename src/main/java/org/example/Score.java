@@ -1,60 +1,60 @@
 package org.example;
-import java.util.Random;
-public class Score {
-    private int scoreX;
 
-    private int scoreY;
-    private int oldScoreX;
-    private int getOldScoreY;
+public class Score {
+    private int x;
+
+    private int y;
+    private int previousX;
+    private int previousY;
     private char symbol;
 
 
     public Score() {
     }
 
-    public Score(int scoreX, int scoreY, int oldScoreX, int getOldScoreY, char symbol) {
-        this.scoreX = scoreX;
-        this.scoreY = scoreY;
-        this.oldScoreX = oldScoreX;
-        this.getOldScoreY = getOldScoreY;
+    public Score(int x, int y, int previousX, int previousY, char symbol) {
+        this.x = x;
+        this.y = y;
+        this.previousX = previousX;
+        this.previousY = previousY;
         this.symbol = symbol;
     }
 
-    public Score(int scoreX, int scoreY) {
-        this.scoreX = scoreX;
-        this.scoreY = scoreY;
+    public Score(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getScoreX() {
-        return scoreX;
+    public int getX() {
+        return x;
     }
 
-    public void setScoreX(int scoreX) {
-        this.scoreX = scoreX;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public int getScoreY() {
-        return scoreY;
+    public int getY() {
+        return y;
     }
 
-    public void setScoreY(int scoreY) {
-        this.scoreY = scoreY;
+    public void setY(int y) {
+        this.y = y;
     }
 
-    public int getOldScoreX() {
-        return oldScoreX;
+    public int getPreviousX() {
+        return previousX;
     }
 
-    public void setOldScoreX(int oldScoreX) {
-        this.oldScoreX = oldScoreX;
+    public void setPreviousX(int previousX) {
+        this.previousX = previousX;
     }
 
-    public int getGetOldScoreY() {
-        return getOldScoreY;
+    public int getPreviousY() {
+        return previousY;
     }
 
-    public void setGetOldScoreY(int getOldScoreY) {
-        this.getOldScoreY = getOldScoreY;
+    public void setPreviousY(int previousY) {
+        this.previousY = previousY;
     }
 
     public char getSymbol() {

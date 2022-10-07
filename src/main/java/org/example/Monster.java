@@ -73,7 +73,7 @@ public class Monster {
         int diffY = this.y - player.getY();
         int absDiffY = Math.abs(diffY);
 
-        int rand =randNum();
+        int rand = randNum();
        //test if
         if(rand < 7){
         if (absDiffX > absDiffY) {
