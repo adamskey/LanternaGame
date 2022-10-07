@@ -1,6 +1,5 @@
 package org.example;
 
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -29,13 +28,14 @@ public class Main {
 
         Player player = createPlayer();
 
-        Score score = new Score();
+        Score score = createScore();
 
         createFirstScore(score, terminal);
 
         List<Monster> monsters = createMonsters();
 
-        drawCharacters(terminal, player, monsters, score);
+        //drawCharacters
+        drawCharacters(terminal, player, monsters);
 
         do {
             KeyStroke keyStroke = getUserKeyStroke(terminal);
@@ -46,7 +46,7 @@ public class Main {
 
             addNewScore(player,score, terminal);
 
-            drawCharacters(terminal, player, monsters, score);
+            drawCharacters(terminal, player, monsters);
 
         } while (isPlayerAlive(player, monsters, terminal));
 
@@ -93,24 +93,24 @@ public class Main {
     }
 
     public static Score addNewScore(Player player, Score score, Terminal terminal) throws IOException {
-        Random randomScorePosition = new Random();
-        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+        System.out.println("Score X: " +  score.getScoreX() + "\nScore Y: " + score.getScoreY());
+        System.out.println("Player X: " +  player.getX() + "\nPlayer Y: " + player.getY());
         if(player.getX() == score.getScoreX() && player.getY() == score.getScoreY()){
-        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-        terminal.setCursorPosition(score.getScoreX(), score.getScoreY());
-        terminal.putCharacter('S');
-        terminal.bell();
-       // terminal.flush();
-          //  createFirstScore(score, terminal);
+
+            terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+            terminal.setCursorPosition(score.getScoreX(), score.getScoreY());
+            terminal.putCharacter('S');
+            terminal.bell();
+            terminal.flush();
+            //  createFirstScore(score, terminal);
         }
         return null;
     }
-    public static void createFirstScore(Player player, Score score, Terminal terminal) throws IOException {
-        Random randomScorePosition = new Random();
-        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+    public static void createFirstScore(Score score, Terminal terminal) throws IOException {
+        //Random randomScorePosition = new Random();
+        //Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
         terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
-        addNewScore(player, score, terminal);
+        terminal.setCursorPosition(score.getScoreX(), score.getScoreY());
         terminal.putCharacter('S');
         terminal.bell();
         terminal.flush();
@@ -128,13 +128,11 @@ public class Main {
     private static Terminal createTerminal() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Terminal terminal = terminalFactory.createTerminal();
-        TerminalSize ts = new TerminalSize(30, 20);
-        terminalFactory.setInitialTerminalSize(ts);
         terminal.setCursorVisible(false);
         return terminal;
     }
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters, Score score) throws IOException {
+    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
         //Monster
         for (Monster monster : monsters) {
             terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
@@ -143,12 +141,6 @@ public class Main {
             terminal.setCursorPosition(monster.getX(), monster.getY());
             terminal.putCharacter(monster.getSymbol());
         }
-        //Creates new score
-//        Random randomScorePosition = new Random();
-//        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
-//        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-//        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
-//        terminal.putCharacter('S');
 
         //Player
         terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
@@ -173,9 +165,6 @@ public class Main {
         }
 
 
-    }
-
-    private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
         for (Monster monster : monsters) {
             if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
 
