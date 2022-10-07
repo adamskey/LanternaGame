@@ -34,11 +34,7 @@ public class Main {
 
         List<Monster> monsters = createMonsters();
 
-        //Heart
-        heartsLeft(terminal);
-
-
-
+        //drawCharacters
         drawCharacters(terminal, player, monsters);
 
         do {
@@ -52,7 +48,7 @@ public class Main {
 
             drawCharacters(terminal, player, monsters);
 
-        } while (isPlayerAlive(player, monsters));
+        } while (isPlayerAlive(player, monsters, terminal));
 
         terminal.setForegroundColor(TextColor.ANSI.RED);
         terminal.setCursorPosition(player.getX(), player.getY());
@@ -114,20 +110,6 @@ public class Main {
         terminal.flush();
     }
 
-    //Hearts Left
-
-    private static void heartsLeft(Terminal terminal) throws IOException {
-        List<Hearts> hearts = new ArrayList<>();
-        hearts.add(new Hearts(1,1, '\u2665'));
-        hearts.add(new Hearts(2, 1, '\u2665'));
-        hearts.add(new Hearts(3, 1, '\u2665'));
-        for (Hearts heart : hearts) {
-            terminal.setCursorPosition(heart.getX(), heart.getY());
-            terminal.putCharacter(heart.getSymbol());
-            terminal.flush();
-        }
-    }
-
     //Creates Monsters
     private static List<Monster> createMonsters() {
         List<Monster> monsters = new ArrayList<>();
@@ -154,7 +136,6 @@ public class Main {
             terminal.putCharacter(monster.getSymbol());
         }
 
-
         //Player
         terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
         terminal.putCharacter(' ');
@@ -165,9 +146,39 @@ public class Main {
         terminal.flush();
     }
 
-    private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
+    private static boolean isPlayerAlive(Player player, List<Monster> monsters, Terminal terminal) throws IOException, InterruptedException {
+
+        List<Hearts> hearts = new ArrayList<>();
+        hearts.add(new Hearts(1,1, '\u2665'));
+        hearts.add(new Hearts(2, 1, '\u2665'));
+        hearts.add(new Hearts(3, 1, '\u2665'));
+        for (Hearts heart : hearts) {
+            terminal.setCursorPosition(heart.getX(), heart.getY());
+            terminal.putCharacter(heart.getSymbol());
+            terminal.flush();
+        }
+
+
         for (Monster monster : monsters) {
             if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
+
+                int hpLeft = hearts.size();
+                terminal.setCursorPosition(hpLeft,1);
+                terminal.putCharacter(' ');
+                hearts.remove(hpLeft-1);
+                terminal.bell();
+                terminal.flush();
+
+            }
+            if (monster.getX() == player.getX() && monster.getY() == player.getY() && hearts.isEmpty()) {
+                String message = " -GAME OVER-";
+                for (int i = 0; i < message.length(); i++) {
+                    terminal.setCursorPosition(i, 10);
+                    terminal.setForegroundColor(TextColor.ANSI.RED);
+                    terminal.putCharacter(message.charAt(i));
+                }
+                Thread.sleep(5000);
+                terminal.close();
                 return false;
             }
         }
