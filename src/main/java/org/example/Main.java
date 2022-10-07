@@ -29,13 +29,13 @@ public class Main {
 
         Player player = createPlayer();
 
-        Score score = createScore();
+        Score score = new Score();
 
-        createFirstScore(player, score, terminal);
+        createFirstScore(score, terminal);
 
         List<Monster> monsters = createMonsters();
 
-        drawCharacters(terminal, player, monsters);
+        drawCharacters(terminal, player, monsters, score);
 
         do {
             KeyStroke keyStroke = getUserKeyStroke(terminal);
@@ -43,12 +43,12 @@ public class Main {
             movePlayer(player, keyStroke);
 
             moveMonsters(player, monsters);
-            System.out.println("Score X " + score.getScoreX() + "score y " + score.getScoreY());
+
             addNewScore(player,score, terminal);
 
-            drawCharacters(terminal, player, monsters);
+            drawCharacters(terminal, player, monsters, score);
 
-        } while (isPlayerAlive(player, monsters));
+        } while (isPlayerAlive(player, monsters, terminal));
 
         terminal.setForegroundColor(TextColor.ANSI.RED);
         terminal.setCursorPosition(player.getX(), player.getY());
@@ -56,6 +56,8 @@ public class Main {
         terminal.bell();
         terminal.flush();
     }
+
+
 
     private static void moveMonsters(Player player, List<Monster> monsters) {
         for (Monster monster : monsters) {
@@ -114,11 +116,12 @@ public class Main {
         terminal.flush();
     }
 
+    //Creates Monsters
     private static List<Monster> createMonsters() {
         List<Monster> monsters = new ArrayList<>();
-        //monsters.add(new Monster(3, 3, '\u26CF'));
-        //monsters.add(new Monster(23, 23, '\u26CF'));
-        //monsters.add(new Monster(3, 23, '\u26CF'));
+        monsters.add(new Monster(3, 3, '\u26CF'));
+        monsters.add(new Monster(23, 23, '\u26CF'));
+        monsters.add(new Monster(3, 23, '\u26CF'));
         return monsters;
     }
 
@@ -131,7 +134,7 @@ public class Main {
         return terminal;
     }
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
+    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters, Score score) throws IOException {
         //Monster
         for (Monster monster : monsters) {
             terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
@@ -155,6 +158,19 @@ public class Main {
         terminal.putCharacter(player.getSymbol());
 
         terminal.flush();
+    }
+
+    private static boolean isPlayerAlive(Player player, List<Monster> monsters, Terminal terminal) throws IOException, InterruptedException {
+
+        List<Hearts> hearts = new ArrayList<>();
+        hearts.add(new Hearts(1,1, '\u2665'));
+        hearts.add(new Hearts(2, 1, '\u2665'));
+        hearts.add(new Hearts(3, 1, '\u2665'));
+        for (Hearts heart : hearts) {
+            terminal.setCursorPosition(heart.getX(), heart.getY());
+            terminal.putCharacter(heart.getSymbol());
+            terminal.flush();
+        }
 
 
     }
@@ -162,11 +178,30 @@ public class Main {
     private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
         for (Monster monster : monsters) {
             if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
+
+                int hpLeft = hearts.size();
+                terminal.setCursorPosition(hpLeft,1);
+                terminal.putCharacter(' ');
+                hearts.remove(hpLeft-1);
+                terminal.bell();
+                terminal.flush();
+
+            }
+            if (monster.getX() == player.getX() && monster.getY() == player.getY() && hearts.isEmpty()) {
+                String message = " -GAME OVER-";
+                for (int i = 0; i < message.length(); i++) {
+                    terminal.setCursorPosition(i, 10);
+                    terminal.setForegroundColor(TextColor.ANSI.RED);
+                    terminal.putCharacter(message.charAt(i));
+                }
+                Thread.sleep(5000);
+                terminal.close();
                 return false;
             }
         }
         return true;
     }
+
 
 
 }
