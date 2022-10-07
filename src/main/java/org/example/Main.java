@@ -34,7 +34,12 @@ public class Main {
 
         List<Monster> monsters = createMonsters();
 
-        drawCharacters(terminal, player, monsters, score);
+        //Heart
+        heartsLeft(terminal);
+
+
+
+        drawCharacters(terminal, player, monsters);
 
         do {
             KeyStroke keyStroke = getUserKeyStroke(terminal);
@@ -45,7 +50,7 @@ public class Main {
 
             addNewScore(player,score, terminal);
 
-            drawCharacters(terminal, player, monsters, score);
+            drawCharacters(terminal, player, monsters);
 
         } while (isPlayerAlive(player, monsters));
 
@@ -55,6 +60,8 @@ public class Main {
         terminal.bell();
         terminal.flush();
     }
+
+
 
     private static void moveMonsters(Player player, List<Monster> monsters) {
         for (Monster monster : monsters) {
@@ -87,12 +94,12 @@ public class Main {
     public static Score addNewScore(Player player, Score score, Terminal terminal) throws IOException {
         if(player.getX() == score.getScoreX() && player.getY() == score.getScoreY()){
             Random randomScorePosition = new Random();
-        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
-        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
-        terminal.putCharacter('S');
-        terminal.bell();
-        terminal.flush();
+            Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
+            terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
+            terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
+            terminal.putCharacter('S');
+            terminal.bell();
+            terminal.flush();
           //  createFirstScore(score, terminal);
         }
         return null;
@@ -107,6 +114,21 @@ public class Main {
         terminal.flush();
     }
 
+    //Hearts Left
+
+    private static void heartsLeft(Terminal terminal) throws IOException {
+        List<Hearts> hearts = new ArrayList<>();
+        hearts.add(new Hearts(1,1, '\u2665'));
+        hearts.add(new Hearts(2, 1, '\u2665'));
+        hearts.add(new Hearts(3, 1, '\u2665'));
+        for (Hearts heart : hearts) {
+            terminal.setCursorPosition(heart.getX(), heart.getY());
+            terminal.putCharacter(heart.getSymbol());
+            terminal.flush();
+        }
+    }
+
+    //Creates Monsters
     private static List<Monster> createMonsters() {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Monster(3, 3, '\u26CF'));
@@ -122,7 +144,7 @@ public class Main {
         return terminal;
     }
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters, Score score) throws IOException {
+    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
         //Monster
         for (Monster monster : monsters) {
             terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
@@ -131,12 +153,7 @@ public class Main {
             terminal.setCursorPosition(monster.getX(), monster.getY());
             terminal.putCharacter(monster.getSymbol());
         }
-        //Creates new score
-//        Random randomScorePosition = new Random();
-//        Score scorePosition = new Score(randomScorePosition.nextInt(25), randomScorePosition.nextInt(15));
-//        terminal.setCursorPosition(score.getScoreX() - 1, score.getScoreY() - 1);
-//        terminal.setCursorPosition(scorePosition.getScoreX(), scorePosition.getScoreY());
-//        terminal.putCharacter('S');
+
 
         //Player
         terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
@@ -146,8 +163,6 @@ public class Main {
         terminal.putCharacter(player.getSymbol());
 
         terminal.flush();
-
-
     }
 
     private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
@@ -158,6 +173,7 @@ public class Main {
         }
         return true;
     }
+
 
 
 }

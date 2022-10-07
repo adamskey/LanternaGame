@@ -65,7 +65,4 @@ public class Score {
         this.symbol = symbol;
     }
 
-    private void addNewScore () {
-
-    }
 }
