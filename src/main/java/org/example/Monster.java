@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Random;
+
 public class Monster {
     private int x;
     private int y;
@@ -55,7 +57,7 @@ public class Monster {
         this.symbol = symbol;
     }
 
-    public void moveTowards(Player player){
+    public void moveTowards(Player player) {
         previousX = x;
         previousY = y;
 
@@ -71,6 +73,9 @@ public class Monster {
         int diffY = this.y - player.getY();
         int absDiffY = Math.abs(diffY);
 
+        int rand =randNum();
+       //test if
+        if(rand < 7){
         if (absDiffX > absDiffY) {
             // Move horizontal! <--->
             if (diffX < 0) {
@@ -98,5 +103,13 @@ public class Monster {
                 this.y -= 1;
             }
         }
+    }//test if sats
+    }
+    public int randNum(){
+        Random rand = new Random();
+        int minimum = 1;
+        int maximum = 10;
+        int returnRand = rand.nextInt((maximum - minimum) + 1) + minimum;
+        return returnRand;
     }
 }
